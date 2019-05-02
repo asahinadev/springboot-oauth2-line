@@ -1,5 +1,10 @@
 server:
   port: 9002
+  ssl:
+    key-store:          "classpath:keystore.p12"
+    key-store-password: "12345678"
+    key-store-type:     "PKCS12"
+    key-alias:          "tomcat"
 
 spring:
   security:
@@ -9,21 +14,24 @@ spring:
           line:
             provider:                     "line"
             client-name:                  "Line"
+            
             client-id:                    "[env]"
             client-secret:                "[env]"
             redirect-uri:                 "{baseUrl}/login/oauth2/code/{registrationId}"
+            
             authorization-grant-type:     "authorization_code"
             client-authentication-method: "POST"
+            
         provider:
           line:
             authorization-uri: "https://access.line.me/dialog/oauth/weblogin"
-            token-uri:         "https://api.line.me/v1/oauth/accessToken"
+            token-uri:         "https://api.line.me/v2/oauth/accessToken"
             user-info-uri:     "https://api.line.me/v2/profile"
             user-info-authentication-method: "get"
-            user-name-attribute: "id" 
+            user-name-attribute: "userId" 
 
 logging:
   level:
-    org.springframework.web.client.RestTemplate:  DEBUG
-    org.springframework.security.access: DEBUG
+    com.example: DEBUG
+    org.springframework.web.client.RestTemplate: DEBUG 
 

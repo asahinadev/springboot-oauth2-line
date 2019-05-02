@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import com.example.spring.line.oauth2.user.LineUser;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguig
@@ -65,8 +67,13 @@ public class SecurityConfiguig
 				.redirectionEndpoint()
 				.and()
 
+				// アクセストークンエンドポイント
+				.tokenEndpoint()
+				.and()
+
 				// ユーザー情報エンドポイント
 				.userInfoEndpoint()
+				.customUserType(LineUser.class, "line")
 				.and()
 
 		;

@@ -1,10 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 <head>
+
 <meta charset="UTF-8" />
 <title>成功</title>
+
+<style type="text/css">
+dl {
+	border: 1px solid black;
+	flex-wrap: wrap;
+	display: flex;
+	align-items: baseline;
+}
+
+dd>dl {
+	border: none;
+}
+
+dt {
+	width: 200px
+}
+
+dd:before {
+	content: ":";
+	padding-left: 1rem;
+}
+
+dd {
+	margin: 10px;
+	width: calc(100% - 220px);
+}
+</style>
+
 </head>
 <body>
-    <h1>成功です</h1>
+
+    <div sec:authorize="isAuthenticated()">
+        <h1>成功です</h1>
+    </div>
+
+    <dl>
+        <dt>USER NAME</dt>
+        <dd sec:authentication="name"></dd>
+        <dt>USER EMAIL</dt>
+        <dd sec:authentication="principal.email"></dd>
+    </dl>
+
 </body>
 </html>
