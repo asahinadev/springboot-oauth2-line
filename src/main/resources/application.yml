@@ -20,12 +20,13 @@ spring:
             redirect-uri:                 "{baseUrl}/login/oauth2/code/{registrationId}"
             
             authorization-grant-type:     "authorization_code"
-            client-authentication-method: "POST"
+            client-authentication-method: "post"
+            scope:            - profile
             
         provider:
           line:
-            authorization-uri: "https://access.line.me/dialog/oauth/weblogin"
-            token-uri:         "https://api.line.me/v2/oauth/accessToken"
+            authorization-uri: "https://access.line.me/oauth2/v2.1/authorize"
+            token-uri:         "https://api.line.me/oauth2/v2.1/token"
             user-info-uri:     "https://api.line.me/v2/profile"
             user-info-authentication-method: "get"
             user-name-attribute: "userId" 
