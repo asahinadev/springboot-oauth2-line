@@ -1,19 +1,18 @@
 plugins {
-	id 'org.springframework.boot' version '2.1.5.RELEASE'
+	id 'org.springframework.boot' version '2.3.1.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id "com.avast.gradle.docker-compose" version "0.12.1"
 	id 'java'
+	id 'eclipse'
 }
 
-apply plugin: 'io.spring.dependency-management'
-
-group = 'com.example.spring'
+group = 'com.example.spring.oauth2'
 version = '0.0.1'
-sourceCompatibility = '11'
+
+sourceCompatibility = 11
+targetCompatibility = 11
 
 configurations {
-	developmentOnly
-	runtimeClasspath {
-		extendsFrom developmentOnly
-	}
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
@@ -27,11 +26,46 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.apache.commons:commons-lang3'
+	
+	runtimeOnly         'org.springframework.boot:spring-boot-devtools'
+
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'org.springframework.security:spring-security-test' 
+}
+
+test {
+	useJUnitPlatform()
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
+javadoc {
+    options.encoding = 'UTF-8'
+}
+
+eclipse {
+	project {
+		natures 'org.thymeleaf.extras.eclipse.core.ThymeleafNature'
+		natures 'org.eclipse.buildship.core.gradleprojectnature'
+		natures 'org.eclipse.jdt.core.javanature'
+
+		buildCommand 'org.eclipse.jdt.core.javabuilder'
+		buildCommand 'org.eclipse.buildship.core.gradleprojectbuilder'
+		buildCommand 'org.thymeleaf.extras.eclipse.core.ThymeleafBuilder'
+	}
 }

@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+    web:
+        image: tomcat:9.0.37-jdk11-openjdk-slim
+        ports:
+            -   9100:8080
+        environment: 
+            DATABASE_NAME:  spring
+            DATABASE_USER:  spring
+            DATABASE_PASS:  spring
+            DATABASE_URL:   jdbc:mysql://db:3306/spring    
+#       volumes: 
+#           -   ./build/libs/demo.war:/usr/local/tomcat/webapps/ROOT.war
+    
+    db:
+        image: mysql:8
+        ports:
+            -   3306:3306
+        environment: 
+            MYSQL_ROOT_PASSWORD: spring
+            MYSQL_DATABASE:      spring
+            MYSQL_USER:          spring
+            MYSQL_PASSWORD:      spring
+        command: "--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci"
+        volumes: 
+            -   /var/lib/mysql
+
+    adminer:
+        image: adminer
+        ports:
+            -   9101:8080
+
